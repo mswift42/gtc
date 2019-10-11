@@ -2,6 +2,8 @@ package intellij
 
 import (
 	"strings"
+
+	"github.com/lucasb-eyer/go-colorful"
 	"github.com/mswift42/gtc/common"
 )
 
@@ -62,4 +64,53 @@ func attrMap(attros []AttrOption) map[string]themeAttributes {
 		tamap[i.Option] = ta
 	}
 	return tamap
+}
+
+const HexHash = "#"
+
+func (tm *ThemeMap) addColors() error {
+	bg, err := colorful.Hex(tm.Bg1)
+	if err != nil {
+		return err
+	}
+	fg, err := colorful.Hex(tm.Fg1)
+	if err != nil {
+		return err
+	}
+	var bg01, bg2, bg3, bg4, fg2 string
+
+	if hasDarkBG(&bg) {
+		bg01 = darken(&bg, 0.1)
+		bg2 = lighten(&bg, 0.08)
+		bg3 = lighten(&bg, 0.16)
+		bg4 = lighten(&bg, 0.24)
+		fg2 = darken(&fg, 0.08)
+	} else {
+		bg01 = lighten(&bg, 0.1)
+		bg2 = darken(&bg, 0.08)
+		bg3 = darken(&bg, 0.16)
+		bg4 = darken(&bg, 0.24)
+		fg2 = lighten(&fg, 0.08)
+	}
+	tm.Bg01 = bg01
+	tm.DarkBG = hasDarkBG(&bg)
+	tm.Bg2 = bg2
+	tm.Bg3 = bg3
+	tm.Bg4 = bg4
+	tm.Fg2 = fg2
+	builtin, _ := colorful.Hex(tm.Builtin)
+	keyw, _ := colorful.Hex(tm.Keyword)
+	typ, _ := colorful.Hex(tm.Type)
+	fnc, _ := colorful.Hex(tm.Func)
+	warn1, _ := colorful.Hex(tm.Warning)
+	warn2, _ := colorful.Hex(tm.Warning2)
+	str, _ := colorful.Hex(tm.String)
+	tm.InvBuiltin = invertColor(&bg, &builtin)
+	tm.InvKeyword = invertColor(&bg, &keyw)
+	tm.InvType = invertColor(&bg, &typ)
+	tm.InvFunc = invertColor(&bg, &fnc)
+	tm.InvString = invertColor(&bg, &str)
+	tm.InvWarning = invertColor(&bg, &warn1)
+	tm.InvWarning2 = invertColor(&bg, &warn2)
+	return nil
 }

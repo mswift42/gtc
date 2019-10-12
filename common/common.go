@@ -34,17 +34,21 @@ type ThemeMap struct {
 	InvWarning2 string
 }
 
-func hasDarkBG(col *colorful.Color) bool {
-	l, _, _ := col.Lab()
+type ThemeColor struct {
+	col *colorful.Color
+}
+
+func (tc *ThemeColor) HasDarkBG() bool {
+	l, _, _ := tc.col.Lab()
 	return l < 0.5
 }
 
-func lighten(col *colorful.Color, factor float64) string {
+func (tc *ThemeColor) Lighten(factor float64) string {
 	white, _ := colorful.Hex("#ffffff")
-	return col.BlendLab(white, factor).Hex()
+	return tc.col.BlendLab(white, factor).Hex()
 }
 
-func darken(col *colorful.Color, factor float64) string {
+func (tc *ThemeColor) Darken(factor float64) string {
 	black, _ := colorful.Hex("#000000")
-	return col.BlendLab(black, factor).Hex()
+	return tc.col.BlendLab(black, factor).Hex()
 }

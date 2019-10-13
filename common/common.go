@@ -9,29 +9,29 @@ import "github.com/lucasb-eyer/go-colorful"
 // as "dark".
 type ThemeMap struct {
 	DarkBG      bool
-	Fg1         string
-	Fg2         string
-	Bg1         string
-	Bg01        string
-	Bg2         string
-	Bg3         string
-	Bg4         string
-	Builtin     string
-	Keyword     string
-	Constant    string
-	Comment     string
-	Func        string
-	String      string
-	Type        string
-	Warning     string
-	Warning2    string
-	InvBuiltin  string
-	InvKeyword  string
-	InvType     string
-	InvFunc     string
-	InvString   string
-	InvWarning  string
-	InvWarning2 string
+	Fg1         ThemeColor
+	Fg2         ThemeColor
+	Bg1         ThemeColor
+	Bg01        ThemeColor
+	Bg2         ThemeColor
+	Bg3         ThemeColor
+	Bg4         ThemeColor
+	Builtin     ThemeColor
+	Keyword     ThemeColor
+	Constant    ThemeColor
+	Comment     ThemeColor
+	Func        ThemeColor
+	String      ThemeColor
+	Type        ThemeColor
+	Warning     ThemeColor
+	Warning2    ThemeColor
+	InvBuiltin  ThemeColor
+	InvKeyword  ThemeColor
+	InvType     ThemeColor
+	InvFunc     ThemeColor
+	InvString   ThemeColor
+	InvWarning  ThemeColor
+	InvWarning2 ThemeColor
 }
 
 type ThemeColor struct {

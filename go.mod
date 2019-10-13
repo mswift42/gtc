@@ -1,4 +1,4 @@
-module gtc
+module github.com/mswift42/gtc
 
 go 1.13
 

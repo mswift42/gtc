@@ -35,17 +35,17 @@ type ThemeMap struct {
 }
 
 func (tm *ThemeMap) AddColors() error {
-	bg, err := colorful.Hex(tm.Bg1)
-	if err != nil {
-		return err
-	}
-	fg, err := colorful.Hex(tm.Fg1)
-	if err != nil {
-		return err
-	}
-	var bg01, bg2, bg3, bg4, fg2 string
+	//bg, err := colorful.Hex(tm.Bg1)
+	//if err != nil {
+	//	return err
+	//}
+	//fg, err := colorful.Hex(tm.Fg1)
+	//if err != nil {
+	//	return err
+	//}
+	//var bg01, bg2, bg3, bg4, fg2 string
 
-	if hasDarkBG(&bg) {
+	if tm.Bg1.HasDarkBG() {
 		bg01 = darken(&bg, 0.1)
 		bg2 = lighten(&bg, 0.08)
 		bg3 = lighten(&bg, 0.16)
@@ -82,7 +82,7 @@ func (tm *ThemeMap) AddColors() error {
 }
 
 type ThemeColor struct {
-	col *colorful.Color
+	col colorful.Color
 }
 
 func (tc *ThemeColor) HasDarkBG() bool {
@@ -90,12 +90,12 @@ func (tc *ThemeColor) HasDarkBG() bool {
 	return l < 0.5
 }
 
-func (tc *ThemeColor) Lighten(factor float64) string {
+func (tc *ThemeColor) Lighten(factor float64) ThemeColor {
 	white, _ := colorful.Hex("#ffffff")
-	return tc.col.BlendLab(white, factor).Hex()
+	return ThemeColor{tc.col.BlendLab(white, factor)}
 }
 
-func (tc *ThemeColor) Darken(factor float64) string {
+func (tc *ThemeColor) Darken(factor float64) ThemeColor {
 	black, _ := colorful.Hex("#000000")
-	return tc.col.BlendLab(black, factor).Hex()
+	return ThemeColor{tc.col.BlendLab(black, factor)}
 }

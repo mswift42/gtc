@@ -3,7 +3,6 @@ package intellij
 import (
 	"strings"
 
-	"github.com/lucasb-eyer/go-colorful"
 	"github.com/mswift42/gtc/common"
 )
 

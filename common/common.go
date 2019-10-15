@@ -35,14 +35,6 @@ type ThemeMap struct {
 }
 
 func (tm *ThemeMap) AddColors() error {
-	//bg, err := colorful.Hex(tm.Bg1)
-	//if err != nil {
-	//	return err
-	//}
-	//fg, err := colorful.Hex(tm.Fg1)
-	//if err != nil {
-	//	return err
-	//}
 	var bg01, bg2, bg3, bg4, fg2 ThemeColor
 
 	if tm.Bg1.HasDarkBG() {
@@ -64,20 +56,13 @@ func (tm *ThemeMap) AddColors() error {
 	tm.Bg3 = bg3
 	tm.Bg4 = bg4
 	tm.Fg2 = fg2
-	//builtin, _ := colorful.Hex(tm.Builtin)
-	//keyw, _ := colorful.Hex(tm.Keyword)
-	//typ, _ := colorful.Hex(tm.Type)
-	//fnc, _ := colorful.Hex(tm.Func)
-	//warn1, _ := colorful.Hex(tm.Warning)
-	//warn2, _ := colorful.Hex(tm.Warning2)
-	//str, _ := colorful.Hex(tm.Stringing)
-	tm.InvBuiltin = invertColor(&bg, &builtin)
-	tm.InvKeyword = invertColor(&bg, &keyw)
-	tm.InvType = invertColor(&bg, &typ)
-	tm.InvFunc = invertColor(&bg, &fnc)
-	tm.InvString = invertColor(&bg, &str)
-	tm.InvWarning = invertColor(&bg, &warn1)
-	tm.InvWarning2 = invertColor(&bg, &warn2)
+	tm.InvBuiltin = tm.Builtin.invertColor(bg01)
+	tm.InvKeyword = tm.Keyword.invertColor(bg01)
+	tm.InvType = tm.Type.invertColor(bg01)
+	tm.InvFunc = tm.Func.invertColor(bg01)
+	tm.InvString = tm.String.invertColor(bg01)
+	tm.InvWarning = tm.Warning.invertColor(bg01)
+	tm.InvWarning2 = tm.Warning2.invertColor(bg01)
 	return nil
 }
 
@@ -100,8 +85,8 @@ func (tc *ThemeColor) Darken(factor float64) ThemeColor {
 	return ThemeColor{tc.col.BlendLab(black, factor)}
 }
 
-func (tc *ThemeColor) invertColor(bgcol, col *colorful.Color) ThemeColor {
-	_, _, l1 := bgcol.Hsl()
-	h2, s2, _ := col.Hsl()
+func (tc *ThemeColor) invertColor(bgcol ThemeColor) ThemeColor {
+	_, _, l1 := bgcol.col.Hsl()
+	h2, s2, _ := tc.col.Hsl()
 	return ThemeColor{colorful.Hsl(h2, s2, l1)}
 }

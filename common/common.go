@@ -43,34 +43,34 @@ func (tm *ThemeMap) AddColors() error {
 	//if err != nil {
 	//	return err
 	//}
-	//var bg01, bg2, bg3, bg4, fg2 string
+	var bg01, bg2, bg3, bg4, fg2 ThemeColor
 
 	if tm.Bg1.HasDarkBG() {
-		bg01 = darken(&bg, 0.1)
-		bg2 = lighten(&bg, 0.08)
-		bg3 = lighten(&bg, 0.16)
-		bg4 = lighten(&bg, 0.24)
-		fg2 = darken(&fg, 0.08)
+		bg01 = tm.Bg1.Darken(0.1)
+		bg2 = tm.Bg1.Lighten(0.08)
+		bg3 = tm.Bg1.Lighten(0.16)
+		bg4 = tm.Bg1.Lighten(0.24)
+		fg2 = tm.Bg1.Darken(0.08)
 	} else {
-		bg01 = lighten(&bg, 0.1)
-		bg2 = darken(&bg, 0.08)
-		bg3 = darken(&bg, 0.16)
-		bg4 = darken(&bg, 0.24)
-		fg2 = lighten(&fg, 0.08)
+		bg01 = tm.Bg1.Lighten(0.1)
+		bg2 = tm.Bg1.Darken(0.08)
+		bg3 = tm.Bg1.Darken(0.16)
+		bg4 = tm.Bg1.Darken(0.24)
+		fg2 = tm.Bg1.Lighten(0.08)
 	}
 	tm.Bg01 = bg01
-	tm.DarkBG = hasDarkBG(&bg)
+	tm.DarkBG = tm.Bg1.HasDarkBG()
 	tm.Bg2 = bg2
 	tm.Bg3 = bg3
 	tm.Bg4 = bg4
 	tm.Fg2 = fg2
-	builtin, _ := colorful.Hex(tm.Builtin)
-	keyw, _ := colorful.Hex(tm.Keyword)
-	typ, _ := colorful.Hex(tm.Type)
-	fnc, _ := colorful.Hex(tm.Func)
-	warn1, _ := colorful.Hex(tm.Warning)
-	warn2, _ := colorful.Hex(tm.Warning2)
-	str, _ := colorful.Hex(tm.String)
+	//builtin, _ := colorful.Hex(tm.Builtin)
+	//keyw, _ := colorful.Hex(tm.Keyword)
+	//typ, _ := colorful.Hex(tm.Type)
+	//fnc, _ := colorful.Hex(tm.Func)
+	//warn1, _ := colorful.Hex(tm.Warning)
+	//warn2, _ := colorful.Hex(tm.Warning2)
+	//str, _ := colorful.Hex(tm.Stringing)
 	tm.InvBuiltin = invertColor(&bg, &builtin)
 	tm.InvKeyword = invertColor(&bg, &keyw)
 	tm.InvType = invertColor(&bg, &typ)
@@ -98,4 +98,10 @@ func (tc *ThemeColor) Lighten(factor float64) ThemeColor {
 func (tc *ThemeColor) Darken(factor float64) ThemeColor {
 	black, _ := colorful.Hex("#000000")
 	return ThemeColor{tc.col.BlendLab(black, factor)}
+}
+
+func (tc *ThemeColor) invertColor(bgcol, col *colorful.Color) ThemeColor {
+	_, _, l1 := bgcol.Hsl()
+	h2, s2, _ := col.Hsl()
+	return ThemeColor{colorful.Hsl(h2, s2, l1)}
 }

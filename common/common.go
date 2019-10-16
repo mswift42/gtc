@@ -71,12 +71,12 @@ type ThemeColor struct {
 	ok  bool
 }
 
-func NewThemeColorFromHex(hex string) *ThemeColor {
+func NewThemeColorFromHex(hex string) ThemeColor {
 	col, err := colorful.Hex(hex)
 	if err != nil {
-		return &ThemeColor{col, false}
+		return ThemeColor{col, false}
 	}
-	return &ThemeColor{col, true}
+	return ThemeColor{col, true}
 }
 
 func (tc *ThemeColor) HasDarkBG() bool {

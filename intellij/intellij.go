@@ -32,17 +32,17 @@ type themeAttributes struct {
 func NewThemeMap(td *ThemeFile) (*common.ThemeMap, error) {
 	var tm common.ThemeMap
 	am := attrMap(td.ThemeAttrs)
-	tm.Bg1 = am["TEXT"].bg
-	tm.Fg1 = am["TEXT"].fg
-	tm.Func = am["DEFAULT_FUNCTION_DECLARATION"].fg
-	tm.Comment = am["DEFAULT_BLOCK_COMMENT"].fg
-	tm.Constant = am["DEFAULT_CONSTANT"].fg
-	tm.Keyword = am["DEFAULT_KEYWORD"].fg
-	tm.String = am["DEFAULT_STRING"].fg
-	tm.Type = am["DEFAULT_CLASS_NAME"].fg
-	tm.Builtin = am["DEFAULT_INSTANCE_FIELD"].fg
-	tm.Warning = am["LOG_ERROR_OUTPUT"].fg
-	tm.Warning2 = am["LOG_WARNING_OUTPUT"].fg
+	tm.Bg1 = common.NewThemeColorFromHex(am["TEXT"].bg)
+	tm.Fg1 = common.NewThemeColorFromHex(am["TEXT"].fg)
+	tm.Func = common.NewThemeColorFromHex(am["DEFAULT_FUNCTION_DECLARATION"].fg)
+	tm.Comment = common.NewThemeColorFromHex(am["DEFAULT_BLOCK_COMMENT"].fg)
+	tm.Constant = common.NewThemeColorFromHex(am["DEFAULT_CONSTANT"].fg)
+	tm.Keyword = common.NewThemeColorFromHex(am["DEFAULT_KEYWORD"].fg)
+	tm.String = common.NewThemeColorFromHex(am["DEFAULT_STRING"].fg)
+	tm.Type = common.NewThemeColorFromHex(am["DEFAULT_CLASS_NAME"].fg)
+	tm.Builtin = common.NewThemeColorFromHex(am["DEFAULT_INSTANCE_FIELD"].fg)
+	tm.Warning = common.NewThemeColorFromHex(am["LOG_ERROR_OUTPUT"].fg)
+	tm.Warning2 = common.NewThemeColorFromHex(am["LOG_WARNING_OUTPUT"].fg)
 	err := tm.AddColors()
 	return &tm, err
 }

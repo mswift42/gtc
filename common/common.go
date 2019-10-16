@@ -68,14 +68,15 @@ func (tm *ThemeMap) AddColors() error {
 
 type ThemeColor struct {
 	col colorful.Color
+	ok  bool
 }
 
-func NewThemeColor(hex string) (*ThemeColor, error) {
+func NewThemeColorFromHex(hex string) *ThemeColor {
 	col, err := colorful.Hex(hex)
 	if err != nil {
-		return nil, err
+		return &ThemeColor{col, false}
 	}
-	return &ThemeColor{col}, nil
+	return &ThemeColor{col, true}
 }
 
 func (tc *ThemeColor) HasDarkBG() bool {
@@ -85,16 +86,16 @@ func (tc *ThemeColor) HasDarkBG() bool {
 
 func (tc *ThemeColor) Lighten(factor float64) ThemeColor {
 	white, _ := colorful.Hex("#ffffff")
-	return ThemeColor{tc.col.BlendLab(white, factor)}
+	return ThemeColor{tc.col.BlendLab(white, factor), tc.ok}
 }
 
 func (tc *ThemeColor) Darken(factor float64) ThemeColor {
 	black, _ := colorful.Hex("#000000")
-	return ThemeColor{tc.col.BlendLab(black, factor)}
+	return ThemeColor{tc.col.BlendLab(black, factor), tc.ok}
 }
 
 func (tc *ThemeColor) invertColor(bgcol ThemeColor) ThemeColor {
 	_, _, l1 := bgcol.col.Hsl()
 	h2, s2, _ := tc.col.Hsl()
-	return ThemeColor{colorful.Hsl(h2, s2, l1)}
+	return ThemeColor{colorful.Hsl(h2, s2, l1), tc.ok}
 }

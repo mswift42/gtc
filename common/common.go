@@ -37,21 +37,21 @@ type ThemeMap struct {
 func (tm *ThemeMap) AddColors() error {
 	var bg01, bg2, bg3, bg4, fg2 ThemeColor
 
-	if tm.Bg1.HasDarkBG() {
-		bg01 = tm.Bg1.Darken(0.1)
-		bg2 = tm.Bg1.Lighten(0.08)
-		bg3 = tm.Bg1.Lighten(0.16)
-		bg4 = tm.Bg1.Lighten(0.24)
-		fg2 = tm.Bg1.Darken(0.08)
+	if tm.Bg1.hasDarkBG() {
+		bg01 = tm.Bg1.darken(0.1)
+		bg2 = tm.Bg1.lighten(0.08)
+		bg3 = tm.Bg1.lighten(0.16)
+		bg4 = tm.Bg1.lighten(0.24)
+		fg2 = tm.Bg1.darken(0.08)
 	} else {
-		bg01 = tm.Bg1.Lighten(0.1)
-		bg2 = tm.Bg1.Darken(0.08)
-		bg3 = tm.Bg1.Darken(0.16)
-		bg4 = tm.Bg1.Darken(0.24)
-		fg2 = tm.Bg1.Lighten(0.08)
+		bg01 = tm.Bg1.lighten(0.1)
+		bg2 = tm.Bg1.darken(0.08)
+		bg3 = tm.Bg1.darken(0.16)
+		bg4 = tm.Bg1.darken(0.24)
+		fg2 = tm.Bg1.lighten(0.08)
 	}
 	tm.Bg01 = bg01
-	tm.DarkBG = tm.Bg1.HasDarkBG()
+	tm.DarkBG = tm.Bg1.hasDarkBG()
 	tm.Bg2 = bg2
 	tm.Bg3 = bg3
 	tm.Bg4 = bg4
@@ -79,17 +79,17 @@ func NewThemeColorFromHex(hex string) ThemeColor {
 	return ThemeColor{col, true}
 }
 
-func (tc *ThemeColor) HasDarkBG() bool {
+func (tc *ThemeColor) hasDarkBG() bool {
 	l, _, _ := tc.col.Lab()
 	return l < 0.5
 }
 
-func (tc *ThemeColor) Lighten(factor float64) ThemeColor {
+func (tc *ThemeColor) lighten(factor float64) ThemeColor {
 	white, _ := colorful.Hex("#ffffff")
 	return ThemeColor{tc.col.BlendLab(white, factor), tc.ok}
 }
 
-func (tc *ThemeColor) Darken(factor float64) ThemeColor {
+func (tc *ThemeColor) darken(factor float64) ThemeColor {
 	black, _ := colorful.Hex("#000000")
 	return ThemeColor{tc.col.BlendLab(black, factor), tc.ok}
 }

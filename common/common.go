@@ -70,6 +70,14 @@ type ThemeColor struct {
 	col colorful.Color
 }
 
+func NewThemeColor(hex string) (*ThemeColor, error) {
+	col, err := colorful.Hex(hex)
+	if err != nil {
+		return nil, err
+	}
+	return &ThemeColor{col}, nil
+}
+
 func (tc *ThemeColor) HasDarkBG() bool {
 	l, _, _ := tc.col.Lab()
 	return l < 0.5

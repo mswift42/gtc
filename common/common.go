@@ -71,6 +71,10 @@ type ThemeColor struct {
 	ok  bool
 }
 
+func (tc ThemeColor) String() string {
+	return tc.col.Hex()
+}
+
 func NewThemeColorFromHex(hex string) ThemeColor {
 	col, err := colorful.Hex(hex)
 	if err != nil {

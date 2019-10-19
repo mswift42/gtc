@@ -1,6 +1,10 @@
 package common
 
-import "github.com/lucasb-eyer/go-colorful"
+import (
+	"github.com/lucasb-eyer/go-colorful"
+	"io/ioutil"
+	"os"
+)
 
 // ThemeMap represents all colors of an ui theme.
 // It holds the theme's background color and darker / lighter
@@ -102,4 +106,12 @@ func (tc *ThemeColor) invertColor(bgcol ThemeColor) ThemeColor {
 	_, _, l1 := bgcol.col.Hsl()
 	h2, s2, _ := tc.col.Hsl()
 	return ThemeColor{colorful.Hsl(h2, s2, l1), tc.ok}
+}
+
+func LoadFile(fp string) ([]byte, error) {
+	file, err := os.Open(fp)
+	if err != nil {
+		return nil, err
+	}
+	return ioutil.ReadAll(file)
 }

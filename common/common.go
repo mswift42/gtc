@@ -1,9 +1,11 @@
 package common
 
 import (
+	"bytes"
 	"github.com/lucasb-eyer/go-colorful"
 	"io/ioutil"
 	"os"
+	"text/template"
 )
 
 // ThemeMap represents all colors of an ui theme.
@@ -114,4 +116,16 @@ func LoadFile(fp string) ([]byte, error) {
 		return nil, err
 	}
 	return ioutil.ReadAll(file)
+}
+
+func SaveTemplate(templpath string, filename string, tm *ThemeMap) error {
+	tmpl, err := template.ParseFiles(templpath)
+	if err != nil {
+		return err
+	}
+	var res bytes.Buffer
+	if err := tmpl.Execute(&res, tm); err != nil {
+		return err
+	}
+	return ioutil.WriteFile(filename+".theme.json", res.Bytes(), 0644)
 }

@@ -1,6 +1,8 @@
 package intellij
 
 import (
+	"encoding/xml"
+	"path/filepath"
 	"strings"
 
 	"github.com/mswift42/gtc/common"
@@ -45,6 +47,23 @@ func NewThemeMap(td *ThemeFile) (*common.ThemeMap, error) {
 	tm.Warning2 = common.NewThemeColorFromHex(am["LOG_WARNING_OUTPUT"].fg)
 	err := tm.AddColors()
 	return &tm, err
+}
+
+func GenerateTheme(xmlpath, templpath string) error {
+	xmlbytes, err := common.LoadFile(xmlpath)
+	if err != nil {
+		panic(err)
+	}
+	var tf ThemeFile
+	if err := xml.Unmarshal(xmlbytes, &tf); err != nil {
+		panic(err)
+	}
+	tm, err := NewThemeMap(&tf)
+	if err != nil {
+		panic(err)
+	}
+	filename := strings.TrimSuffix(xmlpath, filepath.Ext(xmlpath))
+	return common.SaveTemplate(templpath, filename, &tm)
 }
 
 func attrMap(attros []AttrOption) map[string]themeAttributes {

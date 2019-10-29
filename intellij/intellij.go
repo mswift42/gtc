@@ -63,7 +63,7 @@ func GenerateTheme(xmlpath, templpath string) error {
 		panic(err)
 	}
 	filename := strings.TrimSuffix(xmlpath, filepath.Ext(xmlpath))
-	return common.SaveTemplate(templpath, filename, &tm)
+	return common.SaveTemplate(templpath, filename, tm)
 }
 
 func attrMap(attros []AttrOption) map[string]themeAttributes {

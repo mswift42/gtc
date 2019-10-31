@@ -2,10 +2,11 @@ package common
 
 import (
 	"bytes"
-	"github.com/lucasb-eyer/go-colorful"
 	"io/ioutil"
 	"os"
 	"text/template"
+
+	"github.com/lucasb-eyer/go-colorful"
 )
 
 // ThemeMap represents all colors of an ui theme.
@@ -29,6 +30,7 @@ type ThemeMap struct {
 	Func        ThemeColor
 	String      ThemeColor
 	Type        ThemeColor
+	Variable    ThemeColor
 	Warning     ThemeColor
 	Warning2    ThemeColor
 	InvBuiltin  ThemeColor

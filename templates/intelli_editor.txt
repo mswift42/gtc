@@ -25,7 +25,7 @@
     <option name="READONLY_FRAGMENT_BACKGROUND" value="" />
     <option name="RIGHT_MARGIN_COLOR" value="{{.Bg2}}" />
     <option name="SELECTED_INDENT_GUIDE" value="{{.Fg2}}" />
-    <option name="SELECTED_TEARLINE_COLOR" value="" />
+    <option name="SELECTED_TEARLINE_COLOR" value="{{.Keyword}}" />
     <option name="SELECTION_BACKGROUND" value="{{.Bg2}}" />
     <option name="SELECTION_FOREGROUND" value="{{.Fg2}}" />
     <option name="SEPARATOR_BELOW_COLOR" value="{{.Bg2}}"/>
